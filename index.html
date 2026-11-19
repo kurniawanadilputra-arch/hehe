@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#092b35">
+<title>DIL DOMINO WIK — Island Edition</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#071d27;color:#fff;font-family:Arial,sans-serif}button,input{font:inherit}button{border:0;border-radius:12px;padding:12px;color:#fff;background:#087e91;font-weight:bold;cursor:pointer}button:active{transform:scale(.98)}input{width:100%;padding:13px;border:1px solid #45616a;border-radius:10px;background:#102d37;color:white;margin:6px 0}.muted{color:#b5d5d9;font-size:12px}.gold{color:#ffdc70}#auth{min-height:100vh;display:grid;place-items:center;padding:20px;background:radial-gradient(circle at top,#178c91,#071d27 65%)}.panel{background:#102e38;border:1px solid #39727a;border-radius:20px;padding:20px;width:100%;max-width:390px;box-shadow:0 15px 50px #0006}.logo{text-align:center;font-size:27px;font-weight:1000;color:#ffd45c;text-shadow:0 2px 10px #a56b00}.small{text-align:center;color:#b5d5d9;font-size:12px}#app{display:none;max-width:520px;margin:auto;min-height:100vh;background:#0b2933;padding-bottom:85px}.top{display:flex;align-items:center;justify-content:space-between;padding:14px;background:#123c46;position:sticky;top:0;z-index:5}.coins{background:#73520c;padding:9px 12px;border-radius:20px;color:#ffe18a;font-weight:bold}.hero{margin:12px;border-radius:20px;padding:20px;background:linear-gradient(145deg,#087f78,#154f67 55%,#172c4d);min-height:190px;position:relative;overflow:hidden}.hero:after{content:"🏝️";font-size:110px;position:absolute;right:4px;bottom:-4px;opacity:.9}.hero h2{color:#ffe28a;margin:0 0 8px;position:relative;z-index:1}.hero p{max-width:62%;font-size:13px;position:relative;z-index:1}.section{padding:12px}.section h3{margin:4px 0 12px;color:#ffe28a}.games{display:grid;grid-template-columns:1fr 1fr;gap:10px}.game{padding:15px;border-radius:16px;background:linear-gradient(145deg,#195565,#123640);border:1px solid #376b72;text-align:center;cursor:pointer}.game .emoji{font-size:38px}.game b{display:block;margin:7px 0}.game small{color:#b8d7dc}.cards{display:flex;gap:9px;overflow:auto}.card{min-width:130px;flex:1;background:#153e49;border-radius:14px;padding:13px;text-align:center}.nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:520px;background:#102e38;display:flex;justify-content:space-around;padding:9px 3px;border-top:1px solid #37616a;z-index:8}.nav button{background:transparent;padding:8px 5px;font-size:12px}.page{display:none;padding:14px}.page.active{display:block}.box{background:#143944;border:1px solid #315d65;border-radius:15px;padding:15px;margin:10px 0}.vip{border:1px solid #d6a52d;background:linear-gradient(130deg,#58400b,#182f35)}.tile{display:inline-grid;place-items:center;background:#f5e6b9;color:#173b3e;border-radius:9px;width:55px;height:70px;margin:5px;font-size:23px;font-weight:bold}.hidden{display:none!important}#toast{position:fixed;top:65px;left:50%;transform:translateX(-50%);background:#ffe08a;color:#222;padding:12px 18px;border-radius:12px;display:none;z-index:20;max-width:90%;text-align:center}.ownerNav{color:#ffdc70!important}.musicBtn{background:#315d68;padding:9px 11px;border:1px solid #6d9da2}.tag{display:inline-block;border:1px solid #d6a52d;border-radius:20px;padding:5px 10px;color:#ffdc70;font-size:12px}.actionrow{display:flex;gap:8px;flex-wrap:wrap}.actionrow button{flex:1}.result{min-height:25px;color:#ffe28a;margin-top:12px}
+</style>
+</head>
+<body>
+<div id="toast"></div>
+<div id="auth">
+ <div class="panel">
+  <div class="logo">🏝️ DIL DOMINO WIK</div>
+  <p class="small">ISLAND EDITION • PLAY & HAVE FUN</p>
+  <h3 id="authTitle">Masuk ke akun</h3>
+  <input id="username" placeholder="Nama pemain" autocomplete="username">
+  <input id="password" type="password" placeholder="Password" autocomplete="current-password">
+  <button style="width:100%;margin-top:8px" onclick="login()">MASUK</button>
+  <button style="width:100%;margin-top:8px;background:#28616c" onclick="register()">DAFTAR AKUN</button>
+  <p class="small">Prototype game dengan koin virtual. Data akun tersimpan di browser perangkat ini.</p>
+ </div>
+</div>
+
+<div id="app">
+ <div class="top">
+  <div><b style="color:#ffdc70">🏝️ DIL WIK</b><div id="hello" style="font-size:12px">Player</div></div>
+  <div style="display:flex;gap:7px;align-items:center"><button class="musicBtn" id="musicBtn" onclick="toggleMusic()">♫ Musik: OFF</button><div class="coins">🪙 <span id="coin">1000</span></div></div>
+ </div>
+ <div id="home" class="page active">
+  <div class="hero">
+   <h2>ISLAND ADVENTURE</h2>
+   <p>Selamat datang di pulau permainan! Pilih game dan ajak temanmu.</p>
+   <button onclick="showPage('games')">MAIN SEKARANG</button>
+  </div>
+  <div class="section">
+   <h3>🎮 PILIH PERMAINAN</h3>
+   <div class="games">
+    <div class="game" onclick="openGame('Domino Santai')"><div class="emoji">🁣</div><b>Domino Santai</b><small>Latihan melawan bot</small></div>
+    <div class="game" onclick="openGame('Mahjong Puzzle')"><div class="emoji">🀄</div><b>Mahjong Puzzle</b><small>Cocokkan pasangan</small></div>
+    <div class="game" onclick="openGame('Tebak Angka')"><div class="emoji">🎯</div><b>Tebak Angka</b><small>Game santai</small></div>
+    <div class="game" onclick="showPage('room')"><div class="emoji">👥</div><b>Mabar Room</b><small>Buat room teman</small></div>
+   </div>
+  </div>
+  <div class="section">
+   <h3>⭐ EVENT ISLAND</h3>
+   <div class="cards">
+    <div class="card">🎁<b>Daily Gift</b><p class="muted">Hadiah harian</p><button onclick="daily()">AMBIL</button></div>
+    <div class="card">👑<b>VIP Island</b><p class="muted">Lencana VIP</p><button onclick="showPage('vip')">LIHAT</button></div>
+    <div class="card">🏆<b>Leaderboard</b><p class="muted">Peringkat demo</p><button onclick="showPage('rank')">LIHAT</button></div>
+   </div>
+  </div>
+ </div>
+ <div id="games" class="page">
+  <h2>🎮 Semua Game</h2>
+  <div class="games">
+   <div class="game" onclick="openGame('Domino Santai')">🁣<b>Domino Santai</b></div>
+   <div class="game" onclick="openGame('Mahjong Puzzle')">🀄<b>Mahjong Puzzle</b></div>
+   <div class="game" onclick="openGame('Tebak Angka')">🎯<b>Tebak Angka</b></div>
+   <div class="game" onclick="showPage('room')">👥<b>Mabar Room</b></div>
+  </div>
+ </div>
+ <div id="room" class="page">
+  <h2>👥 Mabar Room</h2>
+  <div class="box"><h3>Buat Room</h3><p class="muted">Buat kode undangan untuk dibagikan.</p><button onclick="createRoom()">+ BUAT ROOM</button><h2 id="roomCode" class="gold"></h2><button id="copyRoomBtn" class="hidden" onclick="copyRoom()">SALIN KODE</button></div>
+  <div class="box"><h3>Gabung Room</h3><input id="joinCode" placeholder="Masukkan kode room"><button onclick="joinRoom()">GABUNG</button><p id="joinResult" class="result"></p></div>
+  <p class="small">Room pada versi ini hanya simulasi lokal. Mabar lintas HP memerlukan server online.</p>
+ </div>
+ <div id="profile" class="page">
+  <h2>👤 Profil Pemain</h2>
+  <div class="box" style="text-align:center"><div style="font-size:60px">🧑‍🚀</div><h2 id="profileName">Player</h2><div id="profileRole" class="gold">USER</div><p>Koin virtual: 🪙 <span id="profileCoin"></span></p></div>
+  <div class="box"><h3>Ganti Nama Tampilan</h3><input id="newName" placeholder="Nama baru"><button onclick="changeName()">SIMPAN</button></div>
+  <button style="width:100%;background:#8b3535" onclick="logout()">KELUAR AKUN</button>
+ </div>
+ <div id="vip" class="page">
+  <h2 class="gold">👑 VIP ISLAND</h2>
+  <div class="box vip"><h2>VIP MEMBER</h2><p>✨ Bingkai profil emas</p><p>✨ Lencana VIP</p><p>✨ Nama spesial</p><p>✨ Masa aktif 30 hari</p><h2 class="gold">VIP 30 HARI</h2><p class="muted">Pembelian resmi harus diatur bersama orang tua/wali melalui penyedia pembayaran yang sah.</p><button onclick="requestVIP()">AJUKAN VIP</button></div>
+  <p id="vipStatus" class="small"></p>
+ </div>
+ <div id="rank" class="page"><h2>🏆 Leaderboard</h2><div class="box">🥇 WIWOKDETOK <span class="tag">OWNER</span></div><div class="box">🥈 Pemain Island</div><div class="box">🥉 Teman Island</div><p class="small">Papan peringkat contoh.</p></div>
+ <div id="admin" class="page">
+  <h2 class="gold">👑 OWNER PANEL</h2>
+  <div class="box"><h3>Aktifkan VIP demo pemain</h3><input id="vipTarget" placeholder="Username pemain"><button onclick="grantVIP()">AKTIFKAN VIP 30 HARI</button></div>
+  <div class="box"><h3>Tambah koin demo</h3><input id="coinTarget" placeholder="Username pemain"><input id="coinAmount" type="number" placeholder="Jumlah koin"><button onclick="addCoins()">TAMBAH KOIN</button></div>
+  <p class="small">Panel ini hanya demo lokal dan tidak aman untuk admin publik.</p>
+ </div>
+ <div id="play" class="page"><h2 id="gameTitle">Game</h2><div class="box" id="gameArea"></div><button onclick="showPage('home')">KEMBALI KE LOBBY</button></div>
+ <div class="nav">
+  <button onclick="showPage('home')">🏝️<br>Lobby</button><button onclick="showPage('games')">🎮<br>Game</button><button onclick="showPage('room')">👥<br>Mabar</button><button onclick="showPage('vip')">👑<br>VIP</button><button onclick="showPage('profile')">👤<br>Profil</button>
+ </div>
+</div>
+<script>
+const KEY="dilwik_accounts_v1";let current=null,roomNow="",picked=[];
+const $=id=>document.getElementById(id);
+function accounts(){try{return JSON.parse(localStorage.getItem(KEY)||"{}")}catch(e){return {}}}
+function saveAccounts(a){localStorage.setItem(KEY,JSON.stringify(a))}
+function clean(s){return String(s||"").trim().replace(/[<>]/g,"").slice(0,20)}
+function toast(t){let x=$("toast");x.textContent=t;x.style.display="block";setTimeout(()=>x.style.display="none",2300)}
+function login(){let n=clean($("username").value),p=$("password").value,a=accounts();if(!n||!p)return toast("Isi nama dan password dulu");if(!a[n]||a[n].password!==p)return toast("Akun atau password salah");current=n;enter()}
+function register(){let n=clean($("username").value),p=$("password").value,a=accounts();if(n.length<3||p.length<4)return toast("Nama minimal 3 dan password minimal 4 karakter");if(a[n])return toast("Nama sudah dipakai");a[n]={password:p,display:n,coins:1000,vipUntil:0,daily:""};saveAccounts(a);current=n;enter()}
+function enter(){$("auth").style.display="none";$("app").style.display="block";refresh();showPage("home")}
+function me(){return accounts()[current]}
+function updateMe(fn){let a=accounts();if(!a[current])return;fn(a[current]);saveAccounts(a);refresh()}
+function isOwner(){return current==="WIWOKDETOK"}
+function isVIP(u){return !!u&&u.vipUntil>Date.now()}
+function refresh(){let u=me();if(!u)return;if(u.vipUntil&&u.vipUntil<=Date.now()){u.vipUntil=0;let a=accounts();a[current]=u;saveAccounts(a)}$("hello").textContent=u.display+(isOwner()?" 👑":"");$("coin").textContent=u.coins;$("profileCoin").textContent=u.coins;$("profileName").textContent=u.display;$("profileRole").textContent=isOwner()?"👑 OWNER":isVIP(u)?"⭐ VIP MEMBER":"USER";$("vipStatus").textContent=isVIP(u)?"VIP aktif sampai "+new Date(u.vipUntil).toLocaleDateString("id-ID"):"Belum memiliki VIP aktif.";document.querySelectorAll(".ownerNav").forEach(x=>x.remove());if(isOwner()){let b=document.createElement("button");b.className="ownerNav";b.innerHTML="⚙️<br>Admin";b.onclick=()=>showPage("admin");document.querySelector(".nav").appendChild(b)}}
+function showPage(id){document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));$(id).classList.add("active")}
+function logout(){current=null;$("app").style.display="none";$("auth").style.display="grid";$("username").value="";$("password").value=""}
+function changeName(){let n=clean($("newName").value);if(n.length<3)return toast("Nama terlalu pendek");updateMe(u=>u.display=n);toast("Nama berhasil diganti")}
+function daily(){let today=new Date().toDateString();if(me().daily===today)return toast("Hadiah hari ini sudah diambil");updateMe(u=>{u.coins+=100;u.daily=today});toast("+100 koin virtual!")}
+function requestVIP(){toast("Permintaan VIP demo dicatat. Pembelian resmi perlu wali dan sistem pembayaran aman.")}
+function grantVIP(){if(!isOwner())return;let n=clean($("vipTarget").value),a=accounts();if(!a[n])return toast("Pemain tidak ditemukan");a[n].vipUntil=Date.now()+30*86400000;saveAccounts(a);toast("VIP demo aktif 30 hari")}
+function addCoins(){if(!isOwner())return;let n=clean($("coinTarget").value),v=Number($("coinAmount").value),a=accounts();if(!a[n]||!Number.isFinite(v)||v<1||v>1000000)return toast("Periksa username dan jumlah koin");a[n].coins+=Math.floor(v);saveAccounts(a);toast("Koin demo ditambahkan")}
+function createRoom(){roomNow=Math.random().toString(36).slice(2,8).toUpperCase();$("roomCode").textContent="KODE: "+roomNow;$("copyRoomBtn").classList.remove("hidden");toast("Room demo dibuat")}
+function copyRoom(){if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(roomNow).then(()=>toast("Kode disalin")).catch(()=>toast("Kode room: "+roomNow))}else toast("Kode room: "+roomNow)}
+function joinRoom(){let c=clean($("joinCode").value).toUpperCase();if(!c)return toast("Masukkan kode room");$("joinResult").textContent="Kode "+c+" diterima sebagai simulasi. Server mabar online belum terhubung."}
+function openGame(name){showPage("play");$("gameTitle").textContent="🎮 "+name;let area=$("gameArea");if(name==="Tebak Angka"){let t=Math.floor(Math.random()*5)+1;area.innerHTML='<p>Tebak angka dari 1 sampai 5!</p><input id="guess" type="number" min="1" max="5" placeholder="Masukkan angka"><button onclick="guessNumber('+t+')">TEBAK</button><p id="result" class="result"></p>'}else if(name==="Mahjong Puzzle"){let vals=["🐉","🌸","⭐","🐉","🌸","⭐"].sort(()=>Math.random()-.5);picked=[];area.innerHTML='<p>Cocokkan tiga pasang gambar yang sama.</p>'+vals.map(v=>'<button class="tile" onclick="flipTile(this,\''+v+'\')">❔</button>').join("")+'<p id="mahjongResult" class="result"></p>'}else{area.innerHTML='<p>Latihan domino santai melawan bot. Tidak ada taruhan.</p><div style="font-size:48px">🁣 🁤 🁥</div><button onclick="dominoMove()">AMBIL GILIRAN</button><p id="dominoResult" class="result">Giliran kamu!</p>'}}
+
+let audioCtx=null,musicTimer=null,musicOn=false,musicStep=0;
+const melody=[523.25,659.25,783.99,659.25,587.33,698.46,783.99,698.46,523.25,659.25,880,783.99,659.25,587.33,523.25,392];
+function playNote(freq,when,duration){
+ if(!audioCtx)return;
+ const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
+ osc.type="sine";osc.frequency.setValueAtTime(freq,when);
+ gain.gain.setValueAtTime(0.0001,when);
+ gain.gain.exponentialRampToValueAtTime(0.055,when+0.025);
+ gain.gain.exponentialRampToValueAtTime(0.0001,when+duration);
+ osc.connect(gain);gain.connect(audioCtx.destination);
+ osc.start(when);osc.stop(when+duration+0.03);
+}
+function musicTick(){
+ if(!musicOn||!audioCtx)return;
+ const now=audioCtx.currentTime;
+ playNote(melody[musicStep%melody.length],now,0.32);
+ if(musicStep%4===0)playNote(melody[(musicStep+4)%melody.length]/2,now,0.55);
+ musicStep++;
+}
+async function toggleMusic(){
+ try{
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==="suspended")await audioCtx.resume();
+  musicOn=!musicOn;
+  $("musicBtn").textContent=musicOn?"♫ Musik: ON":"♫ Musik: OFF";
+  if(musicOn){musicTick();musicTimer=setInterval(musicTick,420);toast("Musik island dinyalakan 🎵")}
+  else{clearInterval(musicTimer);toast("Musik dimatikan")}
+ }catch(e){toast("Browser tidak mendukung audio")}
+}
+
+function guessNumber(t){let g=Number($("guess").value);$("result").textContent=g===t?"Benar! Hebat!":"Belum tepat, coba lagi!"}
+function flipTile(el,v){if(el.textContent!=="❔")return;el.textContent=v;picked.push({el,v});if(picked.length===2){let pair=picked.slice();if(pair[0].v===pair[1].v){$("mahjongResult").textContent="Pasangan cocok!"}else{setTimeout(()=>pair.forEach(x=>x.el.textContent="❔"),650)}picked=[]}}
+function dominoMove(){$("dominoResult").textContent="Kamu memainkan satu giliran. Bot sedang berpikir... 🤖"}
+</script>
+</body>
+</html>
